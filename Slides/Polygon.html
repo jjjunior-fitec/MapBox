@@ -1,0 +1,98 @@
+
+
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <title>Quadrado Branco</title>
+    <meta name="viewport" content="initial-scale=1,maximum-scale=1,user-scalable=no" />
+    <script src="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.js"></script>
+    <link href="https://api.mapbox.com/mapbox-gl-js/v1.7.0/mapbox-gl.css" rel="stylesheet" />
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+        <style type="text/css">
+                #info {
+                    display: block;
+                    position: relative;
+                    margin: 0px auto;
+                    width: 50%;
+                    padding: 10px;
+                    border: none;
+                    border-radius: 3px;
+                    font-size: 12px;
+                    text-align: center;
+                    color: #222;
+                    background: #fff;
+                }
+            </style>
+            <div id="map"></div>
+            <pre id="info"></pre>
+    <script>
+        mapboxgl.accessToken = 'pk.eyJ1IjoiampqdW5pb3IiLCJhIjoiY2s3YW9wcnZiMDNmcTNmcHB2NGViZ3dnMSJ9.VNAd4BsjKRddqzt2jdOXGw';
+        var map = new mapboxgl.Map({
+            container: 'map', // container id
+            style: 'mapbox://styles/mapbox/satellite-v9', // stylesheet location
+            center: [-48.78204345703124, -18.768514546536885], // starting position [lng, lat]
+            zoom: 13 // starting zoom
+        });
+
+        map.on('load', function () {
+            map.addSource('quadrado', {
+                'type': 'geojson',
+                'data': {
+                    'type': 'Feature',
+                    'geometry': {
+                        'type': 'Polygon',
+                        'coordinates': [
+                            [
+                            [-48.792600631714464,-18.765751454553055],[-48.78178596496653,-18.76648286566204],[-48.78281593322808,-18.77477196981299],[-48.79277229309102,-18.77363427376757],[-48.792600631714464,-18.765751454553055] ]
+                        ]
+                    }
+                }
+            });
+
+            map.addLayer({
+                'id': 'quadrado',
+                'type': 'fill',
+                'source': 'quadrado',
+                'layout': {},
+                'paint': {
+                    'fill-color': '#FFFFFF',
+                    'fill-opacity': 1,
+                    'fill-outline-color': '#D3D3D3'
+                }
+            });
+
+
+            map.on('mousemove', function (e) {
+            document.getElementById('info').innerHTML =
+                // e.point is the x, y coordinates of the mousemove event relative
+                // to the top-left corner of the map
+                JSON.stringify(e.point) +
+                '<br />' +
+                // e.lngLat is the longitude, latitude geographical position of the event
+                JSON.stringify(e.lngLat.wrap());
+        });
+        });
+
+
+    </script>
+
+</body>
+
+</html>
