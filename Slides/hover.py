@@ -61,12 +61,12 @@ def geoJsonFy(path, jsonFileName):
 
         if(filenames[file].split('.')[-1] == "txt"):
             if(filenames[file].split('_')[-1] in ["top.txt", "bottom.txt", "left.txt", "right.txt"]):
-                print(filename, "_sub pass")
+                #print(filename, "_sub pass")
                 filename = filenames[file].split('_')[0]
                 hasMultTalhao, idMultTalhao = findTalhao(
                     GeoJson["features"], filename)
                 if (hasMultTalhao):
-                    print(filename, hasMultTalhao)
+                    #print(filename, hasMultTalhao)
                     coord = GeoJson['features'][idMultTalhao]["geometry"]["coordinates"]
                     if (GeoJson['features'][idMultTalhao]["geometry"]["type"] == "Polygon"):
                         coord = [coord]
@@ -91,7 +91,7 @@ def geoJsonFy(path, jsonFileName):
                                                "TALHAO_ID": str(id),
                                                "TALHAO_NAME": filename},
                                            "id": id} )
-
-        id = id + 1
+            #print(filename,id)
+            id = id + 1
     create_json(jsonFileName, GeoJson)
     return
